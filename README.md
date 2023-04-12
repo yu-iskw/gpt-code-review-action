@@ -82,4 +82,4 @@ jobs:
 
 ## Known Issues
 1. We may pay for the OpenAI API usage a lot, if we use the Action for a large number of pull requests.
-2.The Action may fail due to the rate limit of the OpenAI API.
+2. The Action may fail due to the rate limit of the OpenAI API.
