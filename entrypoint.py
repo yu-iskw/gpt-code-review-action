@@ -37,7 +37,7 @@ def check_required_env_vars():
 def get_review_prompt(diff: str, extra_prompt: str = "") -> str:
     """Get a prompt template"""
     template = """
-    This is a pull request. Sometimes, it is a part of a pull request, if the pull request is too large.
+    This is a pull request or a part of a pull request if the pull request is too large.
     Please assume you are a reviewer of this PR as a great software engineer and a security engineer.
     Can you tell me the issues with the subsequent pull request and provide suggestions to improve it?
     It would be great if you can provide a summary of the review and comments about issues by file.
@@ -130,6 +130,9 @@ def get_review(
         )
         review_result = response["choices"][0]["text"]
         chunked_reviews.append(review_result)
+    # If the chunked reviews are only one, return it
+    if len(chunked_reviews) == 1:
+        return chunked_reviews, chunked_reviews[0]
     # Summarize the chunked reviews
     summarize_prompt = get_summarize_prompt(chunked_reviews="\n".join(chunked_reviews))
     response = openai.Completion.create(
