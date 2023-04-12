@@ -9,19 +9,19 @@ We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so
 
 ## Inputs
 
-_ `openai_api_key`: The OpenAI API key to access the OpenAI API.
-_ `github_token`: The GitHub token to access the GitHub API.
-_ `github_repository`: The GitHub repository to post a review comment.
-_ `github_pull_request_number`: The GitHub pull request number to post a review comment.
-_ `git_commit_hash`: The git commit hash to post a review comment.
-_ `pull_request_diff`: The diff of the pull request to generate a review comment.
-_ `extra_prompt`: The extra prompt to generate a review comment.
-_ `model`: The model to generate a review comment.
-_ `temperature`: The temperature to generate a review comment.
-_ `top_p`: The top_p to generate a review comment.
-_ `max_tokens`: The max_tokens to generate a review comment.
-_ `frequency_penalty`: The frequency_penalty to generate a review comment.
-_ `presence_penalty`: The presence_penalty to generate a review comment.
+- `openai_api_key`: The OpenAI API key to access the OpenAI API.
+- `github_token`: The GitHub token to access the GitHub API.
+- `github_repository`: The GitHub repository to post a review comment.
+- `github_pull_request_number`: The GitHub pull request number to post a review comment.
+- `git_commit_hash`: The git commit hash to post a review comment.
+- `pull_request_diff`: The diff of the pull request to generate a review comment.
+- `extra_prompt`: The extra prompt to generate a review comment.
+- `model`: The model to generate a review comment.
+- `temperature`: The temperature to generate a review comment.
+- `top_p`: The top_p to generate a review comment.
+- `max_tokens`: The max_tokens to generate a review comment.
+- `frequency_penalty`: The frequency_penalty to generate a review comment.
+- `presence_penalty`: The presence_penalty to generate a review comment.
 - `log_level`: The log level to print logs.
 
 ## Example usage
