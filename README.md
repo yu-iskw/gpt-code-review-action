@@ -4,30 +4,40 @@ A container GitHub Action to review a pull request by GPT.
 If the size of a pull request is over the maximum chunk size of the OpenAI API, the Action will split the pull request into multiple chunks and generate review comments for each chunk.
 And then the Action summarizes the review comments and posts a review comment to the pull request.
 
+## Pre-requisites
+We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so that we securely pass it to the Action.
+
 ## Inputs
 
-_ `openai_api_key`: The OpenAI API key to access the OpenAI API.
-_ `github_token`: The GitHub token to access the GitHub API.
-_ `github_repository`: The GitHub repository to post a review comment.
-_ `github_pull_request_number`: The GitHub pull request number to post a review comment.
-_ `git_commit_hash`: The git commit hash to post a review comment.
-_ `pull_request_diff`: The diff of the pull request to generate a review comment.
-_ `extra_prompt`: The extra prompt to generate a review comment.
-_ `model`: The model to generate a review comment.
-_ `temperature`: The temperature to generate a review comment.
-_ `top_p`: The top_p to generate a review comment.
-_ `max_tokens`: The max_tokens to generate a review comment.
-_ `frequency_penalty`: The frequency_penalty to generate a review comment.
-_ `presence_penalty`: The presence_penalty to generate a review comment.
+- `openai_api_key`: The OpenAI API key to access the OpenAI API.
+- `github_token`: The GitHub token to access the GitHub API.
+- `github_repository`: The GitHub repository to post a review comment.
+- `github_pull_request_number`: The GitHub pull request number to post a review comment.
+- `git_commit_hash`: The git commit hash to post a review comment.
+- `pull_request_diff`: The diff of the pull request to generate a review comment.
+- `extra_prompt`: The extra prompt to generate a review comment.
+- `model`: The model to generate a review comment.
+- `temperature`: The temperature to generate a review comment.
+- `top_p`: The top_p to generate a review comment.
+- `max_tokens`: The max_tokens to generate a review comment.
+- `frequency_penalty`: The frequency_penalty to generate a review comment.
+- `presence_penalty`: The presence_penalty to generate a review comment.
 - `log_level`: The log level to print logs.
 
 ## Example usage
+Here is an example to use the Action to review a pull request of the repository.
+The actual file is located at [`.github/workflows/test-action.yml`](.github/workflows/test-action.yml).
+We set `extra_prompt` to `You are very familiar with python too.`, as the Action is implemented in Python.
+We aim to make GPT review a pull request from a point of view of a Python developer.
 
 ```yaml
 name: "Test Code Review"
 
 on:
   pull_request:
+    paths-ignore:
+      - "*.md"
+      - "LICENSE"
 
 jobs:
   review:
