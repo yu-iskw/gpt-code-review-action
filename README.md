@@ -4,6 +4,9 @@ A container GitHub Action to review a pull request by GPT.
 If the size of a pull request is over the maximum chunk size of the OpenAI API, the Action will split the pull request into multiple chunks and generate review comments for each chunk.
 And then the Action summarizes the review comments and posts a review comment to the pull request.
 
+## Pre-requisites
+We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so that we securely pass it to the Action.
+
 ## Inputs
 
 _ `openai_api_key`: The OpenAI API key to access the OpenAI API.
@@ -22,12 +25,19 @@ _ `presence_penalty`: The presence_penalty to generate a review comment.
 - `log_level`: The log level to print logs.
 
 ## Example usage
+Here is an example to use the Action to review a pull request of the repository.
+The actual file is located at [`.github/workflows/test-action.yml`](.github/workflows/test-action.yml).
+We set `extra_prompt` to `You are very familiar with python too.`, as the Action is implemented in Python.
+We aim to make GPT review a pull request from a point of view of a Python developer.
 
 ```yaml
 name: "Test Code Review"
 
 on:
   pull_request:
+    paths-ignore:
+      - "*.md"
+      - "LICENSE"
 
 jobs:
   review:
