@@ -39,7 +39,7 @@ def get_review_prompt(diff: str, extra_prompt: str = "") -> str:
     template = """
     This is a pull request or a part of a pull request if the pull request is too large.
     Please assume you are a reviewer of this PR as a great software engineer and a security engineer.
-    Can you tell me the issues with the subsequent pull request and provide suggestions to improve it?
+    Can you tell me the issues with differences in a pull request and provide suggestions to improve it?
     It would be great if you can provide a summary of the review and comments about issues by file.
 
     {extra_prompt}
@@ -148,6 +148,19 @@ def get_review(
     return chunked_reviews, summarized_review
 
 
+def format_review_comment(summarized_review: str, chunked_reviews: List[str]) -> str:
+    """Format reviews"""
+    if len(chunked_reviews) == 1:
+        return summarized_review
+    unioned_reviews = "\n".join(chunked_reviews)
+    review = f"""
+    {summarized_review}
+    ---
+    {unioned_reviews}
+    """
+    return review
+
+
 @click.command()
 @click.option("--diff", type=click.STRING, required=True, help="Pull request diff")
 @click.option("--diff-chunk-size", type=click.INT, required=False, default=3500, help="Pull request diff")
@@ -194,13 +207,17 @@ def main(
     logger.debug(f"Summarized review: {summarized_review}")
     logger.debug(f"Chunked reviews: {chunked_reviews}")
 
+    # Format reviews
+    review_comment = format_review_comment(summarized_review=summarized_review,
+                                           chunked_reviews=chunked_reviews)
+
     # Create a comment to a pull request
     create_a_comment_to_pull_request(
         github_token=os.getenv("GITHUB_TOKEN"),
         github_repository=os.getenv("GITHUB_REPOSITORY"),
         pull_request_number=int(os.getenv("GITHUB_PULL_REQUEST_NUMBER")),
         git_commit_hash=os.getenv("GIT_COMMIT_HASH"),
-        body=summarized_review
+        body=review_comment
     )
 
 
