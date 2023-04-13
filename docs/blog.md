@@ -69,7 +69,7 @@ jobs:
             cat "diff.txt";
             echo 'EOF';
           } >> $GITHUB_OUTPUT
-      - uses: ./
+      - uses: yu-iskw/gpt-code-review-action@v0.1.0
         name: "Code Review by GPT"
         id: review
         with:
