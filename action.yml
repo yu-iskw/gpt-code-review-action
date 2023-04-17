@@ -92,7 +92,6 @@ runs:
     GITHUB_PULL_REQUEST_NUMBER: ${{ inputs.github_pull_request_number }}
     GIT_COMMIT_HASH: ${{ inputs.git_commit_hash }}
   args:
-    - "--diff=${{ inputs.pull_request_diff }}"
     - "--model=${{ inputs.model }}"
     - "--extra-prompt=${{ inputs.extra_prompt }}"
     - "--temperature=${{ inputs.temperature }}"
@@ -100,3 +99,4 @@ runs:
     - "--top-p=${{ inputs.top_p }}"
     - "--frequency-penalty=${{ inputs.frequency_penalty }}"
     - "--presence-penalty=${{ inputs.presence_penalty }}"
+    - "--diff=${{ inputs.pull_request_diff }}"
