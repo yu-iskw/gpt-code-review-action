@@ -65,6 +65,10 @@ inputs:
   pull_request_diff:
     description: "Pull request diff"
     required: true
+  pull_request_chunk_size:
+    description: "Pull request chunk size"
+    required: false
+    default: "3500"
   log_level:
     description: "Log level"
     required: false
@@ -99,4 +103,5 @@ runs:
     - "--top-p=${{ inputs.top_p }}"
     - "--frequency-penalty=${{ inputs.frequency_penalty }}"
     - "--presence-penalty=${{ inputs.presence_penalty }}"
+    - "--diff-chunk-size=${{ inputs.pull_request_chunk_size }}"
     - "--diff=${{ inputs.pull_request_diff }}"
