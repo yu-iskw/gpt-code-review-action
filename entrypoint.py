@@ -210,7 +210,6 @@ def main(
     # Format reviews
     review_comment = format_review_comment(summarized_review=summarized_review,
                                            chunked_reviews=chunked_reviews)
-
     # Create a comment to a pull request
     create_a_comment_to_pull_request(
         github_token=os.getenv("GITHUB_TOKEN"),
