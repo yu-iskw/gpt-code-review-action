@@ -16,7 +16,7 @@ We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so
 - `git_commit_hash`: The git commit hash to post a review comment.
 - `pull_request_diff`: The diff of the pull request to generate a review comment.
 - `extra_prompt`: The extra prompt to generate a review comment.
-- `model`: The model to generate a review comment.
+- `model`: The model to generate a review comment. We can use a model which is available in `openai.ChatCompletion.create`.
 - `temperature`: The temperature to generate a review comment.
 - `top_p`: The top_p to generate a review comment.
 - `max_tokens`: The max_tokens to generate a review comment.
