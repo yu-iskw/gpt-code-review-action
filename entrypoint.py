@@ -130,7 +130,6 @@ def get_review(
             {"role": "system", "content": summarize_prompt},
             {"role": "user", "content": "\n".join(chunked_reviews)},
         ],
-        prompt=summarize_prompt,
         temperature=temperature,
         max_tokens=max_tokens,
         top_p=top_p,
