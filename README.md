@@ -15,6 +15,7 @@ We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so
 - `github_pull_request_number`: The GitHub pull request number to post a review comment.
 - `git_commit_hash`: The git commit hash to post a review comment.
 - `pull_request_diff`: The diff of the pull request to generate a review comment.
+- `pull_request_diff_chunk_size`: The chunk size of the diff of the pull request to generate a review comment.
 - `extra_prompt`: The extra prompt to generate a review comment.
 - `model`: The model to generate a review comment. We can use a model which is available in `openai.ChatCompletion.create`.
 - `temperature`: The temperature to generate a review comment.
@@ -23,6 +24,12 @@ We have to set a GitHub Actions secret `OPENAI_API_KEY` to use the OpenAI API so
 - `frequency_penalty`: The frequency_penalty to generate a review comment.
 - `presence_penalty`: The presence_penalty to generate a review comment.
 - `log_level`: The log level to print logs.
+
+As you might know, a model of OpenAI has limitation of the maximum number of input tokens.
+So we have to split the diff of a pull request into multiple chunks, if the size of the diff is over the limitation.
+We can tune the chunk size based on the model we use.
+For instance, `gpt-4` can handle larger input tokens than `gpt-3.5-turbo`.
+So, we can increase the chunk size for `gpt-4` than `gpt-3.5-turbo`.
 
 ## Example usage
 Here is an example to use the Action to review a pull request of the repository.
@@ -61,7 +68,7 @@ jobs:
           git diff "origin/${{ env.PULL_REQUEST_HEAD_REF }}" > "diff.txt"
           # shellcheck disable=SC2086
           echo "diff=$(cat "diff.txt")" >> $GITHUB_ENV
-      - uses: yu-iskw/gpt-code-review-action@v0.1.0
+      - uses: yu-iskw/gpt-code-review-action@v0.3.0
         name: "Code Review by GPT"
         id: review
         with:
@@ -70,14 +77,15 @@ jobs:
           github_repository: ${{ github.repository }}
           github_pull_request_number: ${{ github.event.pull_request.number }}
           git_commit_hash: ${{ github.event.pull_request.head.sha }}
-          model: "text-davinci-003"
-          temperature: "0.7"
-          max_tokens: "256"
+          model: "gpt-3.5-turbo"
+          temperature: "0.1"
+          max_tokens: "512"
           top_p: "1"
           frequency_penalty: "0.0"
           presence_penalty: "0.0"
           pull_request_diff: |-
-            ${{ steps.get_diff.outputs.diff }}
+            ${{ steps.get_diff.outputs.pull_request_diff }}
+          pull_request_chunk_size: "3500"
           extra_prompt: |-
             You are very familiar with python too.
           log_level: "DEBUG"
