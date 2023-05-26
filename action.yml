@@ -37,7 +37,7 @@ inputs:
   model:
     description: "GPT model"
     required: true
-    default: "text-davinci-003"
+    default: "gpt-3.5-turbo"
   extra_prompt:
     description: "Extra prompt for GPT"
     required: false
@@ -45,11 +45,11 @@ inputs:
   temperature:
     description: "Temperature for GPT"
     required: false
-    default: "0.7"
+    default: "0.0"
   max_tokens:
     description: "Max tokens for GPT"
     required: false
-    default: "256"
+    default: "600"
   top_p:
     description: "Top p for GPT"
     required: false
