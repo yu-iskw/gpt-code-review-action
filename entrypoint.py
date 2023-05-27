@@ -23,7 +23,7 @@ def check_required_env_vars():
     """Check required environment variables"""
     required_env_vars = [
         "OPENAI_API_KEY",
-        "GITHUB_TOKEN",
+        "GH_TOKEN",
         "GITHUB_REPOSITORY",
         "GITHUB_PULL_REQUEST_NUMBER",
         "GIT_COMMIT_HASH",
@@ -36,12 +36,23 @@ def check_required_env_vars():
 def get_review_prompt(extra_prompt: str = "") -> str:
     """Get a prompt template"""
     template = f"""
-    This is a pull request or a part of a pull request if the pull request is too large.
-    Please assume you review this PR as a great software engineer and a great security engineer.
-    Can you tell me the issues with differences in a pull request and provide suggestions to improve it?
-    You can provide a summary of the review and comments about issues by file, if any important issues are found.
+    You are an engineer reviewing this pull request.
+    
+    Is the code well-structured, readable, and maintainable? Does it follow the company's coding standards and best practices?
 
-    {extra_prompt}
+    Does the code implement the intended functionality? Does it solve the problem it was designed to solve?
+
+    Does the code introduce any security vulnerabilities? Are there any potential attack vectors that need to be addressed?
+
+    Will the code perform well under expected loads? Are there any potential bottlenecks that need to be addressed?
+
+    Has the code been thoroughly tested? Are there any edge cases that need to be considered?
+
+    Is the code well-documented? Are there any missing or incomplete comments or documentation?
+
+    Are the dependencies used in the code up-to-date and secure? Are there any potential conflicts or compatibility issues with other parts of the system?
+
+    Don't bother re-writing the code with your suggestions. Just point out the issues and provide suggestions to improve the pull request.
     """
     return template
 
@@ -204,7 +215,7 @@ def main(
                                            chunked_reviews=chunked_reviews)
     # Create a comment to a pull request
     create_a_comment_to_pull_request(
-        github_token=os.getenv("GITHUB_TOKEN"),
+        github_token=os.getenv("GH_TOKEN"),
         github_repository=os.getenv("GITHUB_REPOSITORY"),
         pull_request_number=int(os.getenv("GITHUB_PULL_REQUEST_NUMBER")),
         git_commit_hash=os.getenv("GIT_COMMIT_HASH"),

@@ -91,7 +91,7 @@ runs:
   image: Dockerfile
   env:
     OPENAI_API_KEY: ${{ inputs.openai_api_key }}
-    GITHUB_TOKEN: ${{ inputs.github_token }}
+    GH_TOKEN: ${{ inputs.github_token }}
     GITHUB_REPOSITORY: ${{ inputs.github_repository }}
     GITHUB_PULL_REQUEST_NUMBER: ${{ inputs.github_pull_request_number }}
     GIT_COMMIT_HASH: ${{ inputs.git_commit_hash }}

@@ -35,8 +35,8 @@ jobs:
         run: |-
           # Fetch the default branch
           git fetch origin "${{ env.DEFAULT_BRANCH }}"
-          # Exclude png files from diff
-          git diff "origin/${{ env.DEFAULT_BRANCH }}" ":(exclude)*.png" > "diff.txt"
+          # Include only Python and TypeScript files in diff
+          git diff "origin/${{ env.DEFAULT_BRANCH }}" ":(exclude)*.png" ":(include)*.py" ":(include)*.ts" > "diff.txt"
           # Put multi-line string into an environment variable
           # shellcheck disable=SC2086
           {
@@ -49,13 +49,13 @@ jobs:
         id: review
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_TOKEN }}
           github_repository: ${{ github.repository }}
           github_pull_request_number: ${{ github.event.pull_request.number }}
           git_commit_hash: ${{ github.event.pull_request.head.sha }}
           model: "gpt-3.5-turbo"
-          temperature: "0.1"
-          max_tokens: "512"
+          temperature: "0.0"
+          max_tokens: "600"
           top_p: "1"
           frequency_penalty: "0.0"
           presence_penalty: "0.0"
