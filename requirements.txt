@@ -10,7 +10,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 
-click==8.1.7
+click>=8,<9
 loguru==0.7.0
 
 requests==2.28.2
