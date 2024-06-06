@@ -12,6 +12,6 @@
 
 -r ./requirements.txt
 
-pytest==4.3.0
+pytest==8.2.2
 
 pre-commit>=3, <4
